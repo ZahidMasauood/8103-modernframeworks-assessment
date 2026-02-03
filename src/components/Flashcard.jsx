@@ -5,7 +5,9 @@ function Flashcard(props) {
                 <h6 className="text-muted mb-2">Front</h6>
                 <p className="card-text">{props.front}</p>
             </div>
-            <div className="flashcard-back">
+            <div className="flashcard-back" style={{
+                visibility: props.showBack ? "visible" : "hidden"
+            }}>
                 <h6 className="text-muted mb-2">Back</h6>
                 <p className="card-text">{props.back}</p>
             </div>
