@@ -1,35 +1,10 @@
-import React, { useState } from 'react'
-import Flashcard from "./components/Flashcard"
+import React, { useEffect, useState } from 'react'
+import Flashcard from "./components/Flashcard";
+import axios from "axios";
 
 function App() {
 
-  const flashcards = [
-    {
-      "id": 2,
-      "front": "What is the capital of France?",
-      "back": "Paris"
-    },
-    {
-      "id": 3,
-      "front": "Who wrote 'Romeo and Juliet'?",
-      "back": "William Shakespeare"
-    },
-    {
-      "id": 4,
-      "front": "What is the chemical symbol for water?",
-      "back": "H₂O"
-    },
-    {
-      "id": 5,
-      "front": "How many continents are there?",
-      "back": "7"
-    },
-    {
-      "id": 6,
-      "front": "What planet is known as the Red Planet?",
-      "back": "Mars"
-    }
-  ]
+  const [flashcards, setFlashcards] = useState([]);
 
   // create a state which default value is false
   // the showMenu variable will store its current value
@@ -37,6 +12,17 @@ function App() {
   const [showMenu, setShowMenu] = useState(false); // creates a state variable when 
                                                   // the component has mounted and use the default value
   const [showBack, setShowBack] = useState(false);
+
+  useEffect(()=>{
+    // when we refer to any images, or static files, React will look
+    // for it in the public folder
+    const fetchData = async () => {
+       const response = await axios.get("./flashcards.json")
+       setFlashcards(response.data);
+    }
+    fetchData();
+   
+  }, [])
 
   const toggleMenu = () => {
     if (showMenu == true) {
