@@ -1,10 +1,12 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import Flashcard from "../components/Flashcard"
+import { useAtom } from "jotai";
+import flashcardAtom from "../atom/FlashcardAtom"
 
 export default function ListCards() {
-    const [flashcards, setFlashcards] = useState([]);
-      const [showBack, setShowBack] = useState(false);
+    const [flashcards, setFlashcards] = useAtom(flashcardAtom);
+    const [showBack, setShowBack] = useState(false);
 
     useEffect(() => {
         // when we refer to any images, or static files, React will look
