@@ -1,28 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import Flashcard from "./components/Flashcard";
-import axios from "axios";
+import  {useState } from 'react'
+import { Link, Router, Route} from 'wouter'
+
+// pages
+import ListCards from './pages/ListCards';
+import AddCard from './pages/AddCard';
+import EditCard from './pages/EditCard';
+import LoginPage from './pages/LoginPage';
 
 function App() {
 
-  const [flashcards, setFlashcards] = useState([]);
+  
 
   // create a state which default value is false
   // the showMenu variable will store its current value
   // the setShowMenu functon can update its value
   const [showMenu, setShowMenu] = useState(false); // creates a state variable when 
                                                   // the component has mounted and use the default value
-  const [showBack, setShowBack] = useState(false);
 
-  useEffect(()=>{
-    // when we refer to any images, or static files, React will look
-    // for it in the public folder
-    const fetchData = async () => {
-       const response = await axios.get("./flashcards.json")
-       setFlashcards(response.data);
-    }
-    fetchData();
-   
-  }, [])
+
+  
 
   const toggleMenu = () => {
     if (showMenu == true) {
@@ -49,13 +45,13 @@ function App() {
         <div className={`collapse navbar-collapse ${showMenu ? "show" : ""}`} id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <a className="nav-link" href="#">Manage</a>
+              <Link className="nav-link" href="/">List Cards</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Review</a>
+              <Link className="nav-link" href="/add">Add Card</Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">Login</a>
+              <Link className="nav-link" href="/login">Login</Link>
             </li>
           </ul>
         </div>
@@ -63,27 +59,12 @@ function App() {
     </nav>
 
     <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Manage Flashcards</h2>
-        <button className="btn btn-success">Add New</button>
-        <button className="btn btn-primary" onClick={()=>setShowBack(!showBack)}>Toggle Back</button>
-      </div>
-
-      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-
-        {
-          flashcards.map( card => (
-            <div className="col" key={card.id}>
-              <Flashcard front={card.front}
-                back={card.back}
-                showBack={showBack}
-              />
-            </div>
-          )
-          )
-        }
-
-      </div>
+     <Router>
+        <Route path="/" component={ListCards}/>
+        <Route path="/add" component={AddCard}/>
+        <Route path="/edit" component={EditCard}/>
+        <Route path="/login" component={LoginPage}/>
+     </Router>
 
 
     </div>
